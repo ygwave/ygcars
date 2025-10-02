@@ -1,102 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Каталог автомобилей - YG Auto</title>
+    <title>Каталог авто - YG Auto</title>
     <style>
-        /* Все стили из index.html + дополнительные для каталога */
         body {
             font-family: 'Arial', sans-serif;
             background: #0a0a0a;
             color: #ffffff;
             margin: 0;
             padding: 0;
-            text-align: center;
-            position: relative;
-            overflow-x: hidden;
         }
-
-        /* Звездный фон */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 4s infinite;
-        }
-
-        .star:nth-child(2n) {
-            background: #d4af37;
-            animation-delay: 1s;
-        }
-
-        .star:nth-child(3n) {
-            background: #ffd700;
-            animation-delay: 2s;
-        }
-
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
-
-        /* Градиент с анимацией */
-        .gradient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a1a, #2a2a2a, #1a1a1a);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-            z-index: -3;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Навигация */
         .header {
             background: rgba(0, 0, 0, 0.95);
             padding: 15px 0;
             border-bottom: 2px solid #333;
-            backdrop-filter: blur(15px);
-            position: relative;
         }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #d4af37, #ffd700, #d4af37, transparent);
-            animation: neonFlow 3s linear infinite;
-        }
-
-        @keyframes neonFlow {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
         .nav {
             display: flex;
             justify-content: center;
@@ -106,415 +24,248 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-
         .nav a {
             color: white;
             text-decoration: none;
             font-size: 16px;
-            font-weight: 500;
             padding: 12px 24px;
             border-radius: 8px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.4s;
         }
-
-        .nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .nav a:hover::before {
-            left: 100%;
-        }
-
         .nav a:hover {
             background: rgba(212, 175, 55, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
         }
-
         .logo {
             font-size: 28px;
             font-weight: bold;
             background: linear-gradient(45deg, #d4af37, #ffd700, #d4af37);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-            animation: logoGlow 2s ease-in-out infinite alternate;
         }
-
-        @keyframes logoGlow {
-            from { text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
-            to { text-shadow: 0 0 30px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.6); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-
-        /* Заголовок каталога */
-        .catalog-header {
-            padding: 120px 20px 80px;
-            background: linear-gradient(135deg, rgba(26,26,26,0.95), rgba(45,45,45,0.9));
-        }
-
-        .catalog-title {
-            font-size: 48px;
-            font-weight: bold;
+        .page-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 10px;
             background: linear-gradient(45deg, #fff, #d4af37, #ffd700, #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleShine 3s ease-in-out infinite;
-            margin-bottom: 20px;
         }
-
-        /* Фильтры */
+        .page-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #cccccc;
+            margin-bottom: 50px;
+        }
         .filters {
-            background: rgba(26,26,26,0.8);
+            background: rgba(26,26,26,0.9);
             padding: 30px;
             border-radius: 15px;
-            margin: 0 auto 50px;
-            max-width: 1000px;
+            margin-bottom: 40px;
             border: 1px solid #333;
-            backdrop-filter: blur(10px);
         }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+        .filter-group {
             margin-bottom: 20px;
         }
-
-        .filter-group {
-            text-align: left;
-        }
-
-        .filter-label {
+        .filter-group label {
             display: block;
             margin-bottom: 8px;
             color: #d4af37;
             font-weight: bold;
         }
-
         .filter-select {
             width: 100%;
             padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
             border-radius: 8px;
-            border: 1px solid #444;
-            background: rgba(255,255,255,0.1);
             color: white;
+            font-size: 16px;
+        }
+        .reset-btn {
+            background: transparent;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
             transition: all 0.3s;
         }
-
-        .filter-select:focus {
-            outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        .reset-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
         }
-
-        /* Сетка автомобилей */
         .cars-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px 80px;
+            margin-top: 40px;
         }
-
         .car-card {
             background: rgba(26,26,26,0.9);
-            border-radius: 20px;
-            border: 1px solid #333;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .car-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .car-card:hover::before {
-            opacity: 1;
-        }
-
-        .car-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            border-color: #d4af37;
-            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
-        }
-
-        .car-image {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            padding: 30px;
-            background: rgba(255,255,255,0.05);
-            transition: all 0.4s ease;
-        }
-
-        .car-card:hover .car-image {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
-        }
-
-        .car-info {
+            border-radius: 15px;
             padding: 25px;
+            border: 1px solid #333;
+            transition: all 0.3s;
+            position: relative;
         }
-
-        .car-name {
-            font-size: 24px;
+        .car-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+        .car-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #d4af37;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
+        }
+        .car-title {
+            font-size: 24px;
             margin-bottom: 10px;
             color: #fff;
         }
-
         .car-price {
             font-size: 28px;
             font-weight: bold;
             color: #d4af37;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
-
         .car-specs {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-bottom: 20px;
-            color: #cccccc;
         }
-
-        .car-spec {
+        .spec-item {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px;
+            border-radius: 6px;
             text-align: center;
+            font-size: 14px;
         }
-
-        .spec-value {
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .btn-buy {
+        .btn-primary {
             background: linear-gradient(135deg, #d4af37, #ffd700);
             color: #000;
             padding: 15px 30px;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: bold;
             display: block;
-            transition: all 0.4s;
+            text-align: center;
+            transition: all 0.3s;
             border: none;
+            width: 100%;
             cursor: pointer;
         }
-
-        .btn-buy:hover {
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
-        }
-
-        /* Бейдж новинки */
-        .car-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            z-index: 2;
-        }
-
-        /* Загрузка */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #d4af37;
-        }
-
-        .loading::after {
-            content: '';
-            animation: loadingDots 1.5s infinite;
-        }
-
-        @keyframes loadingDots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-
-        /* Анимация появления */
-        .car-card {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .car-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
     </style>
 </head>
 <body>
-    <!-- Звездный фон -->
-    <div class="stars" id="stars"></div>
-    <div class="gradient-bg"></div>
-
     <!-- Шапка -->
     <header class="header">
         <nav class="nav">
             <div class="logo">YG AUTO</div>
-            <a href="/">Главная</a>
-            <a href="/cars">Каталог авто</a>
-            <a href="/about">О компании</a>
+            <a href="index.html">Главная</a>
+            <a href="cars.html">Каталог авто</a>
+            <a href="about.html">О компании</a>
         </nav>
     </header>
 
-    <!-- Заголовок каталога -->
-    <section class="catalog-header">
-        <h1 class="catalog-title">КААТАЛОГ АВТОМОБИЛЕЙ</h1>
-        <p style="font-size: 20px; color: #cccccc;">Выберите свой идеальный автомобиль из нашей эксклюзивной коллекции</p>
-    </section>
+    <!-- Основной контент -->
+    <div class="container">
+        <h1 class="page-title">Выберите свой идеальный автомобиль</h1>
+        <p class="page-subtitle">Эксклюзивная коллекция премиальных автомобилей</p>
 
-    <!-- Фильтры -->
-    <section class="filters">
-        <div class="filter-grid">
+        <!-- Фильтры -->
+        <div class="filters">
             <div class="filter-group">
-                <label class="filter-label">🏷️ Марка</label>
-                <select class="filter-select" id="brandFilter">
-                    <option value="all">Все марки</option>
-                    <option value="bmw">BMW</option>
-                    <option value="audi">Audi</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="lada">Lada</option>
-                    <option value="toyota">Toyota</option>
+                <label>Марка</label>
+                <select class="filter-select">
+                    <option>Все марки</option>
+                    <option>BMW</option>
+                    <option>Mercedes-Benz</option>
+                    <option>Audi</option>
+                    <option>Porsche</option>
                 </select>
             </div>
             <div class="filter-group">
-                <label class="filter-label">💰 Цена</label>
-                <select class="filter-select" id="priceFilter">
-                    <option value="all">Любая цена</option>
-                    <option value="1-2">1-2 млн</option>
-                    <option value="2-5">2-5 млн</option>
-                    <option value="5+">от 5 млн</option>
+                <label>Цена</label>
+                <select class="filter-select">
+                    <option>Любая цена</option>
+                    <option>До 2 млн</option>
+                    <option>2-4 млн</option>
+                    <option>4-6 млн</option>
+                    <option>От 6 млн</option>
                 </select>
             </div>
             <div class="filter-group">
-                <label class="filter-label">📅 Год</label>
-                <select class="filter-select" id="yearFilter">
-                    <option value="all">Любой год</option>
-                    <option value="2023-2024">2023-2024</option>
-                    <option value="2020-2022">2020-2022</option>
-                    <option value="2017-2019">2017-2019</option>
+                <label>Год</label>
+                <select class="filter-select">
+                    <option>Любой год</option>
+                    <option>2020-2024</option>
+                    <option>2015-2019</option>
+                    <option>2010-2014</option>
                 </select>
             </div>
-            <div class="filter-group">
-                <label class="filter-label">⚡ Тип</label>
-                <select class="filter-select" id="typeFilter">
-                    <option value="all">Все типы</option>
-                    <option value="sedan">Седан</option>
-                    <option value="suv">Внедорожник</option>
-                    <option value="coupe">Купе</option>
-                </select>
-            </div>
+            <button class="reset-btn">Сбросить фильтры</button>
         </div>
-        <button class="btn-buy" onclick="resetFilters()" style="background: #444; color: white;">Сбросить фильтры</button>
-    </section>
 
-    <!-- Сетка автомобилей -->
-    <div class="cars-grid">
-        {% for car in cars %}
-        <div class="car-card">
-            {% if car == 'BMW' %}
-                <div class="car-badge">Новинка</div>
-            {% endif %}
-            <img class="car-image"
-                 src="/static/images/{{ car.lower() }}.png"
-                 alt="{{ car }}"
-                 onerror="this.style.display='none'">
-            <div class="car-info">
-                <div class="car-name">{{ car }}</div>
+        <!-- Сетка автомобилей -->
+        <div class="cars-grid">
+            <!-- Авто 1 -->
+            <div class="car-card">
+                <div class="car-badge">НОВИНКА</div>
+                <h3 class="car-title">BMW X5</h3>
                 <div class="car-price">2 500 000 ₽</div>
                 <div class="car-specs">
-                    <div class="car-spec">
-                        <div>🚀 249 л.с.</div>
-                        <div class="spec-value">2.0L</div>
-                    </div>
-                    <div class="car-spec">
-                        <div>⚡ 7.1с</div>
-                        <div class="spec-value">0-100 км/ч</div>
-                    </div>
-                    <div class="car-spec">
-                        <div>🛣️ 8.1л</div>
-                        <div class="spec-value">на 100км</div>
-                    </div>
+                    <div class="spec-item">240 л.с.</div>
+                    <div class="spec-item">2.0L</div>
+                    <div class="spec-item">7.1с 0-100</div>
+                    <div class="spec-item">8.1л/100км</div>
                 </div>
-                <button class="btn-buy">Забронировать</button>
+                <button class="btn-primary">Забронировать</button>
+            </div>
+
+            <!-- Авто 2 -->
+            <div class="car-card">
+                <div class="car-badge">В НАЛИЧИИ</div>
+                <h3 class="car-title">Mercedes GLE</h3>
+                <div class="car-price">3 200 000 ₽</div>
+                <div class="car-specs">
+                    <div class="spec-item">258 л.с.</div>
+                    <div class="spec-item">2.0L</div>
+                    <div class="spec-item">6.8с 0-100</div>
+                    <div class="spec-item">8.5л/100км</div>
+                </div>
+                <button class="btn-primary">Забронировать</button>
+            </div>
+
+            <!-- Авто 3 -->
+            <div class="car-card">
+                <div class="car-badge">ЭКСКЛЮЗИВ</div>
+                <h3 class="car-title">Porsche Cayenne</h3>
+                <div class="car-price">4 800 000 ₽</div>
+                <div class="car-specs">
+                    <div class="spec-item">340 л.с.</div>
+                    <div class="spec-item">3.0L</div>
+                    <div class="spec-item">5.9с 0-100</div>
+                    <div class="spec-item">9.2л/100км</div>
+                </div>
+                <button class="btn-primary">Забронировать</button>
             </div>
         </div>
-        {% endfor %}
     </div>
-
-    <script>
-        // Создание звезд
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 100; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = Math.random() * 3 + 1 + 'px';
-            star.style.height = star.style.width;
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 4 + 's';
-            star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            starsContainer.appendChild(star);
-        }
-
-        // Анимация появления
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.car-card').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Фильтры
-        function resetFilters() {
-            document.querySelectorAll('.filter-select').forEach(select => {
-                select.value = 'all';
-            });
-        }
-
-        // Имитация фильтрации
-        document.querySelectorAll('.filter-select').forEach(select => {
-            select.addEventListener('change', function() {
-                document.querySelectorAll('.car-card').forEach(card => {
-                    card.style.display = 'block';
-                });
-            });
-        });
-    </script>
 </body>
 </html>
